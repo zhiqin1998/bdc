@@ -1,0 +1,5 @@
+type: mv
+
+parameters:
+    box_iou_thres: 0.5
+    box_combine_method: majority
