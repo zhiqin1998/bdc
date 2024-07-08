@@ -50,7 +50,7 @@ Extensive experiments on both real and synthetic crowdsourced datasets show that
     ```
 
 ## Dataset
-Download our synthesised crowdsourced annotations from [here](). Extract and place the annotations in `data` directory.
+Download our synthesised crowdsourced annotations from [here](https://drive.google.com/file/d/1sXjqwGP62NbOAY-EMxiHr3jKQDQEo576/view?usp=sharing). Extract and place the annotations in `data` directory.
 Please download [Pascal VOC](http://host.robots.ox.ac.uk/pascal/VOC), [MSCOCO](https://cocodataset.org/#home) and [VinDr-CXR](https://www.kaggle.com/c/vinbigdata-chest-xray-abnormalities-detection/overview) and place the images in `.data` directory following this structure:
 ```
 .
