@@ -8,7 +8,7 @@ import numpy as np
 import torchvision.transforms.functional as FT
 
 from torch.utils.data import Dataset
-from PIL import Image
+from PIL import Image, ImageOps
 from torchvision.transforms import transforms
 from utils.crowd.aggregator import bbox_iou
 from sklearn.utils import compute_class_weight
@@ -95,6 +95,7 @@ class CleanDataset(Dataset):
     normalize_std: list[float]
         std of RGB for normalizing
     """
+
     def __init__(self, img_dir, annotations_path, image_size=512, transform=None, normalize_box=True, expected_ele=5,
                  max_size=None, normalize_mean=None, normalize_std=None, skip_empty=False):
         """
@@ -251,7 +252,10 @@ class CleanDataset(Dataset):
             tuple of image info with format (original height, original width), ((y gain, x gain), (y pad, x pad))
         """
         img_filename = os.path.join(self.img_dir, self.annotation_files[idx].rstrip('.txt'))
-        img = Image.open(img_filename).convert("RGB")
+        img = ImageOps.exif_transpose(Image.open(img_filename))
+        if 'I' in img.mode:
+            img = Image.fromarray((np.asarray(img) / 65535 * 255).astype(np.uint8))
+        img = img.convert("RGB")
         ow, oh = img.size
 
         bbox = copy.deepcopy(self.annotations[idx])  # avoid modifying inplace
@@ -311,6 +315,7 @@ class SyntheticDataset(CleanDataset):
 
     TODO: rename class to something else
     """
+
     def __init__(self, img_dir, annotations_path, image_size=512, transform=None, normalize_box=True,
                  train=True, augments=None, aggregator=None, clean_annotations_path=None,
                  max_size=None, normalize_mean=None, normalize_std=None, expected_ele=6, skip_empty=False):
@@ -399,7 +404,7 @@ class SyntheticDataset(CleanDataset):
             if not len(clean_bbox):
                 clean_bbox = clean_bbox.reshape(0, 5)
         return image, bbox, clean_bbox
-    
+
     def _get_n_annotators(self):
         """Helper function to get number of annotators"""
         max_ann_id = -1
@@ -472,7 +477,10 @@ class SyntheticDataset(CleanDataset):
             clean ground truth annotation array
         """
         img_filename = os.path.join(self.img_dir, self.annotation_files[idx].rstrip('.txt'))
-        img = Image.open(img_filename).convert("RGB")
+        img = ImageOps.exif_transpose(Image.open(img_filename))
+        if 'I' in img.mode:
+            img = Image.fromarray((np.asarray(img) / 65535 * 255).astype(np.uint8))
+        img = img.convert("RGB")
         ow, oh = img.size
 
         bbox, clean_bbox = copy.deepcopy(self.annotations[idx]), np.zeros((0, 5))  # avoid modifying inplace
@@ -506,7 +514,7 @@ class SyntheticDataset(CleanDataset):
         self.all_dims = []
         for idx in range(len(self)):
             img_filename = os.path.join(self.img_dir, self.annotation_files[idx].rstrip('.txt'))
-            img = Image.open(img_filename).convert("RGB")
+            img = ImageOps.exif_transpose(Image.open(img_filename))
             self.all_dims.append([img.width, img.height])
 
     def normalize_bbox(self, annotations, inverse=False):
@@ -622,12 +630,12 @@ class ClassificationDataset(Dataset):
                     transforms.RandomApply([
                         transforms.ColorJitter(hue=0.1, saturation=0.4, brightness=0.4),
                         transforms.GaussianBlur((5, 5))
-                        ])
+                    ])
                 ])
             else:
                 self.augment = transforms.Compose([])
 
-    def read_annotations(self, annotation_files, annotations_path, min_size=50, fp_prob=1/80):
+    def read_annotations(self, annotation_files, annotations_path, min_size=50, fp_prob=1 / 80):
         """
         Function to load annotations for classification with random background classes
 
@@ -665,7 +673,10 @@ class ClassificationDataset(Dataset):
                         annotations.append((ann.rstrip('.txt'), box))
             if random.random() < fp_prob:
                 img_filename = os.path.join(self.img_dir, ann.rstrip('.txt'))
-                img = Image.open(img_filename).convert("RGB")
+                img = ImageOps.exif_transpose(Image.open(img_filename))
+                if 'I' in img.mode:
+                    img = Image.fromarray((np.asarray(img) / 65535 * 255).astype(np.uint8))
+                img = img.convert("RGB")
                 w, h = img.size
                 if w > self.img_size[0] and h > self.img_size[1]:
                     i = 0
@@ -709,7 +720,10 @@ class ClassificationDataset(Dataset):
         """
         img_filename, box = self.annotations[idx]
         img_filename = os.path.join(self.img_dir, img_filename)
-        img = Image.open(img_filename).convert("RGB")
+        img = ImageOps.exif_transpose(Image.open(img_filename))
+        if 'I' in img.mode:
+            img = Image.fromarray((np.asarray(img) / 65535 * 255).astype(np.uint8))
+        img = img.convert("RGB")
         box, cls = box[:4], box[4]
 
         img = img.crop(box)
