@@ -1,4 +1,7 @@
-# Bayesian Detector Combination for Object Detection with Crowdsourced Annotations
+# Bayesian Detector Combination
+
+[ECCV 2024](https://eccv.ecva.net/Conferences/2024) | ~~[Proceedings (Not available yet)]()~~ | 
+[![Paper](https://img.shields.io/badge/cs.CV-arxiv:2407.07958-B31B1B.svg)](https://arxiv.org/abs/2407.07958)
 
 ## Description
 <p align="justify">
@@ -108,11 +111,12 @@ General steps to synthesise annotations are as follows:
 If you find this work useful for your research, please cite our work as
 ```bibtex
 @inproceedings{bdc2024tan,
-   title={},
-   author={},
-   booktitle={},
-   pages={},
-   year={},
+   title     = {Bayesian Detector Combination for Object Detection with Crowdsourced Annotations},
+   author    = {Tan, Zhi Qin and Isupova, Olga and Carneiro, Gustavo and Zhu, Xiatian and Li, Yunpeng},
+   booktitle = {Eur. Conf. Comput. Vis.},
+   pages     = {},
+   year      = {2024},
+   address   = {Milan, Italy},
 }
 ```
 
@@ -120,5 +124,5 @@ If you find this work useful for your research, please cite our work as
 Suggestions and opinions on this work (both positive and negative) are greatly welcomed. Please contact the authors by sending an email to
 `zhiqin1998 at hotmail.com`.
 
-## License and Copyright
-The project is open source under BSD-3 license (see the ``` LICENSE ``` file).
+## Acknowledgement
+This work is developed based on codebase of [YOLOv7](https://github.com/WongKinYiu/yolov7) and [EVA](https://github.com/baaivision/EVA).
