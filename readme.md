@@ -25,6 +25,7 @@ Extensive experiments on both real and synthetic crowdsourced datasets show that
 </p>
 
 ## Setup Environment
+Disclaimer: The codes have only been tested on Ubuntu 18.04, Python 3.8.18 and Pytorch 1.13.1 CUDA 11.7, but it should work on environment with similar major version.
 1. Install required libraries by running 
     ```bash
     conda create -n bdc python=3.8
@@ -52,7 +53,7 @@ Extensive experiments on both real and synthetic crowdsourced datasets show that
     wget https://huggingface.co/Yuxin-CV/EVA-02/resolve/main/eva02/det/eva02_L_coco_det_sys_o365.pth
     ```
 
-## Dataset
+## Benchmark Dataset
 Download our synthesised crowdsourced annotations from [here](https://drive.google.com/file/d/1sXjqwGP62NbOAY-EMxiHr3jKQDQEo576/view?usp=sharing). Extract and place the annotations in `data` directory.
 Please download [Pascal VOC](http://host.robots.ox.ac.uk/pascal/VOC), [MSCOCO](https://cocodataset.org/#home) and [VinDr-CXR](https://www.kaggle.com/c/vinbigdata-chest-xray-abnormalities-detection/overview) and place the images in `.data` directory following this structure:
 ```
@@ -73,7 +74,7 @@ Please download [Pascal VOC](http://host.robots.ox.ac.uk/pascal/VOC), [MSCOCO](h
 1. Convert your annotations to YOLO labelling format (one txt file per image).
    - Train annotations follows format: x1,y1,x2,y2,class_id,annotator_id
    - Test annotations (if available, else create empty text file for each test image) follows format: x1,y1,x2,y2,class_id
-2. Create a new yaml file and modify the settings in it followingthe examples in `data` folder.
+2. Create a new yaml file and modify the settings in it following the examples in `data` folder.
 
 
 ## How to run
