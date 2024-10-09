@@ -1,6 +1,6 @@
 # Bayesian Detector Combination
 
-[ECCV 2024](https://eccv.ecva.net/Conferences/2024) | ~~[Proceedings (Not available yet)]()~~ | 
+[ECCV 2024](https://eccv.ecva.net/Conferences/2024) | 
 [![Paper](https://img.shields.io/badge/cs.CV-arxiv:2407.07958-B31B1B.svg)](https://arxiv.org/abs/2407.07958)
 
 ## Description
